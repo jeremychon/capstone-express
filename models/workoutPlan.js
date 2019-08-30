@@ -1,11 +1,13 @@
 const mongoose = require('mongoose')
+const Exercise = require('./exercise')
+const Comment = require('./comment')
 
 const workoutPlanSchema = new mongoose.Schema({
-	userId: Number,
+	userId: Schema.Types.ObjectId,
 	goalType: String,
 	current: Number,
 	goal: Number,
-	exercises: [Object],
+	exercises: [Exercise],
 	public: Boolean,
 	comments: Array
 })
