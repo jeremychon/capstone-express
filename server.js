@@ -14,6 +14,18 @@ app.use(session({
 	saveUninitialized: false
 }))
 
+app.use(bodyParser.urlencoded({extended: false}))
+app.use(bodyParser.json())
+
+// Cross Origin Resource Sharing
+const corsOptions = {
+	origin: 'http://localhost:3000',
+	credentials: true,
+	optionsSuccessStatus: 200
+}
+
+// CORS is set up as middleware so that any client can make a request to our server
+app.use(cors(corsOptions))
 
 
 
