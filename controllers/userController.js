@@ -3,17 +3,6 @@ const router = express.Router()
 const User = require('../models/user')
 const bcrypt = require('bcryptjs')
 
-// ALL USERS
-// router.get('/user/all', async (req, res, next) => {
-// 	try {
-// 		const allUsers = await User.find({})
-// 		console.log(allUsers);
-
-
-// 	} catch (err) {
-// 		next(err)
-// 	}
-// })
 
 // LOGIN
 router.get('/login', async (req, res, next) => {
@@ -138,6 +127,75 @@ router.post('/register', async (req, res, next) => {
 			})
 
 		}
+	} catch (err) {
+		res.status(500).json({
+			success: false,
+			code: 500,
+			message: 'Internal Server Error',
+			error: err
+		})
+	}
+})
+
+
+// ALL USERS
+router.get('/', async (req, res, next) => {
+	try {
+		const allUsers = await User.find({})
+
+		res.json({
+			status: {
+				code: 200,
+				message: 'Found all users',
+				data: allUsers
+			}
+		})
+	} catch (err) {
+		res.status(500).json({
+			success: false,
+			code: 500,
+			message: 'Internal Server Error',
+			error: err
+		})
+	}
+})
+
+
+// SHOW USER
+router.get('/:id', async (req, res, next) => {
+	try {
+		const foundUser = await User.findById(req.params.id)
+
+		res.json({
+			status: {
+				code: 200,
+				message: 'Found specific user',
+				data: foundUser
+			}
+		})
+	} catch (err) {
+		res.status(500).json({
+			success: false,
+			code: 500,
+			message: 'Internal Server Error',
+			error: err
+		})
+	}
+})
+
+
+// DELETE USER
+router.delete('/:id', async (req, res, next) => {
+	try {
+		const deletedUser = await User.findByIdAndRemove(req.params.id)
+
+		res.json({
+			status: {
+				code: 200,
+				message: 'User deleted',
+				data: deletedUser
+			}
+		})
 	} catch (err) {
 		res.status(500).json({
 			success: false,

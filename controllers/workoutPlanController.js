@@ -15,7 +15,6 @@ router.get('/', async (req, res, next) => {
 				data: allPlans
 			}
 		})
-		
 	} catch (err) {
 		res.status(500).json({
 			success: false,
@@ -30,7 +29,9 @@ router.get('/', async (req, res, next) => {
 // CREATE
 router.post('/', async (req, res, next) => {
 	try {
+		console.log(req.session, '<--- session');
 		const createdPlan = await WorkoutPlan.create(req.body)
+		createdPlan.userId = req.session.userId
 		console.log(createdPlan, '<---- createdPlan');
 
 		res.json({
