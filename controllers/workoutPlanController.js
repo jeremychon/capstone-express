@@ -52,6 +52,27 @@ router.post('/', async (req, res, next) => {
 
 
 // SHOW
+router.get('/:id', async (req, res, next) => {
+	console.log(req.params, '<--- req.params');
+	try {
+		const foundPlan = await WorkoutPlan.findById(req.params.id)
+
+		res.json({
+			status: {
+				code: 200,
+				message: 'Found plan',
+				data: foundPlan
+			}
+		})
+	} catch (err) {
+		res.status(500).json({
+			success: false,
+			code: 500,
+			message: 'Internal Server Error',
+			error: err
+		})
+	}
+})
 
 
 
