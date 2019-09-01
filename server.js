@@ -28,9 +28,10 @@ const corsOptions = {
 app.use(cors(corsOptions))
 
 const userController = require('./controllers/userController')
-
-
 app.use('/user', userController)
+
+const workoutPlanController = require('./controllers/workoutPlanController')
+app.use('/plan', workoutPlanController)
 
 
 app.listen(process.env.PORT || 9000, () => {
