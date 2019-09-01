@@ -11,7 +11,7 @@ router.get('/', async (req, res, next) => {
 		res.json({
 			status: {
 				code: 200,
-				message: 'Found all plans',
+				message: 'All plans found successful',
 				data: allPlans
 			}
 		})
@@ -36,7 +36,7 @@ router.post('/', async (req, res, next) => {
 		res.json({
 			status: {
 				code: 200,
-				message: 'Create plan successful',
+				message: 'Plan created successful',
 				data: createdPlan
 			}
 		})
@@ -60,7 +60,7 @@ router.get('/:id', async (req, res, next) => {
 		res.json({
 			status: {
 				code: 200,
-				message: 'Found plan',
+				message: 'Plan found successful',
 				data: foundPlan
 			}
 		})
@@ -75,9 +75,27 @@ router.get('/:id', async (req, res, next) => {
 })
 
 
-
 // UPDATE
+router.put('/:id', async (req, res, next) => {
+	try {
+		const updatedPlan = await WorkoutPlan.findByIdAndUpdate(req.params.id, req.body, {new: true})
 
+		res.json({
+			status: {
+				code: 200,
+				message: 'Plan updated successful',
+				data: updatedPlan
+			}
+		})
+	} catch (err) {
+		res.status(500).json({
+			success: false,
+			code: 500,
+			message: 'Internal Server Error',
+			error: err
+		})
+	}
+})
 
 
 // DELETE
