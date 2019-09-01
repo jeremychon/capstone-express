@@ -99,7 +99,26 @@ router.put('/:id', async (req, res, next) => {
 
 
 // DELETE
+router.delete('/:id', async (req, res, next) => {
+	try {
+		const deletedPlan = await WorkoutPlan.findByIdAndRemove(req.params.id)
 
+		res.json({
+			status: {
+				code: 200,
+				message: 'Plan deleted successful',
+				data: deletedPlan
+			}
+		})
+	} catch (err) {
+		res.status(500).json({
+			success: false,
+			code: 500,
+			message: 'Internal Server Error',
+			error: err
+		})
+	}
+})
 
 
 
