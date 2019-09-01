@@ -27,7 +27,10 @@ const corsOptions = {
 // CORS is set up as middleware so that any client can make a request to our server
 app.use(cors(corsOptions))
 
+const userController = require('./controllers/userController')
 
+
+app.use('/user', userController)
 
 
 app.listen(process.env.PORT || 9000, () => {
