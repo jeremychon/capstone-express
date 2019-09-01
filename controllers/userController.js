@@ -18,10 +18,12 @@ const bcrypt = require('bcryptjs')
 // LOGIN
 router.get('/login', async (req, res, next) => {
 	try {
-		const lowerEmail = req.body.email.toLowerCase()
-		req.body.email = lowerEmail
+		// making all email domains lowercase (anything after the '@')
+		const splitEmail = req.body.email.split('@')
+		const domain = splitEmail[1].toLowerCase()
+		const joinEmail = splitEmail[0] + '@' + domain
 
-		const foundUser = await User.findOne({email: req.body.email})
+		const foundUser = await User.findOne({email: joinEmail})
 		console.log('======');
 		console.log(foundUser, '<--- logged user (foundUser)');
 		console.log('======');
@@ -40,7 +42,8 @@ router.get('/login', async (req, res, next) => {
 				res.json({
 					status: {
 						code: 200,
-						message: 'User login successful'
+						message: 'User logged in',
+						data: foundUser
 					}
 				})
 			} else {
@@ -68,18 +71,37 @@ router.get('/login', async (req, res, next) => {
 })
 
 // LOGOUT
+router.get('/logout', async (req, res, next) => {
+	
+	req.session.destroy((err) => {
+		if (err) {
+			res.status(500).json({
+				success: false,
+				code: 500,
+				message: 'Internal Server Error',
+				error: err
+			})
+		} else {
+			res.status(200).json({
+				success: true,
+				code: 200,
+				message: 'User logged out',
+			})
+		}
+	})
+})
 
 // REGISTER
 router.post('/register', async (req, res, next) => {
 
 	try {
-		// making all emails lowercase
+		// making all email domains lowercase
 		const splitEmail = req.body.email.split('@')
 		const domain = splitEmail[1].toLowerCase()
 		const joinEmail = splitEmail[0] + '@' + domain
-		console.log(joinEmail, '<---- joinEmail');
 
 		const existingUser = await User.findOne({email: joinEmail})
+
 		// checking if a user exists
 		if (existingUser) {
 			res.status(200).json({
@@ -90,7 +112,6 @@ router.post('/register', async (req, res, next) => {
 		} else {
 			// hash password
 			const hashedPassword = bcrypt.hashSync(req.body.password, bcrypt.genSaltSync(10))
-			console.log(hashedPassword, '<--- hashedPassword');
 			
 			// create a new user
 			const registerUser = await User.create({
@@ -111,7 +132,8 @@ router.post('/register', async (req, res, next) => {
 			res.json({
 				status: {
 					code: 200,
-					message: 'User register successful'
+					message: 'User registered',
+					data: registerUser
 				}
 			})
 
