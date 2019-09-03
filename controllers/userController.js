@@ -5,7 +5,7 @@ const bcrypt = require('bcryptjs')
 
 
 // LOGIN
-router.get('/login', async (req, res, next) => {
+router.post('/login', async (req, res, next) => {
 	try {
 		// making all email domains lowercase (anything after the '@')
 		const splitEmail = req.body.email.split('@')
@@ -28,25 +28,24 @@ router.get('/login', async (req, res, next) => {
 				req.session.lastName = foundUser.lastName;
 				req.session.logged = true;
 
-				res.json({
-					status: {
-						code: 200,
-						message: 'User logged in',
-						data: foundUser
-					}
+				res.status(200).json({
+					success: true,
+					code: 200,
+					message: 'User login successful',
+					data: foundUser
 				})
 			} else {
-				res.json({
-					status: 200,
-					message: 'Incorrect email or password'
+				res.status(401).json({
+					success: false,
+					code: 401,
+					message: 'Incorrect email or password',
 				})
 			}
 		} else {
-			res.json({
-				status: {
-					code: 200,
-					message: 'Incorrect email or password'
-				}
+			res.status(401).json({
+				success: false,
+				code: 401,
+				message: 'Incorrect email or password',
 			})
 		}
 	} catch (err) {
@@ -104,7 +103,8 @@ router.post('/register', async (req, res, next) => {
 			
 			// create a new user
 			const registerUser = await User.create({
-				username: req.body.username,
+				firstName: req.body.firstName,
+				lastName: req.body.lastName,
 				email: joinEmail,
 				password: hashedPassword
 			});
@@ -118,12 +118,11 @@ router.post('/register', async (req, res, next) => {
 			req.session.lastName = registerUser.lastName;
 			req.session.logged = true;
 
-			res.json({
-				status: {
-					code: 200,
-					message: 'User registered',
-					data: registerUser
-				}
+			res.status(200).json({
+				success: true,
+				code: 200,
+				message: 'User register successful',
+				data: registerUser
 			})
 
 		}
@@ -143,12 +142,11 @@ router.get('/', async (req, res, next) => {
 	try {
 		const allUsers = await User.find({})
 
-		res.json({
-			status: {
-				code: 200,
-				message: 'Found all users',
-				data: allUsers
-			}
+		res.status(200).json({
+			success: true,
+			code: 200,
+			message: 'Found all users successful',
+			data: allUsers
 		})
 	} catch (err) {
 		res.status(500).json({
@@ -166,12 +164,11 @@ router.get('/:id', async (req, res, next) => {
 	try {
 		const foundUser = await User.findById(req.params.id)
 
-		res.json({
-			status: {
-				code: 200,
-				message: 'Found specific user',
-				data: foundUser
-			}
+		res.status(200).json({
+			success: true,
+			code: 200,
+			message: 'Found specific user successfully',
+			data: foundUser
 		})
 	} catch (err) {
 		res.status(500).json({
@@ -189,12 +186,11 @@ router.delete('/:id', async (req, res, next) => {
 	try {
 		const deletedUser = await User.findByIdAndRemove(req.params.id)
 
-		res.json({
-			status: {
-				code: 200,
-				message: 'User deleted',
-				data: deletedUser
-			}
+		res.status(200).json({
+			success: true,
+			code: 200,
+			message: 'Deleted user successfully',
+			data: deletedUser
 		})
 	} catch (err) {
 		res.status(500).json({
@@ -209,11 +205,6 @@ router.delete('/:id', async (req, res, next) => {
 
 
 module.exports = router
-
-
-
-
-
 
 
 

@@ -9,12 +9,11 @@ router.post('/', async (req, res, next) => {
 		const createdExercise = await Exercise.create(req.body)
 		console.log(createdExercise, '<---- createdExercise');
 
-		res.json({
-			status: {
-				code: 200,
-				message: 'Exercise created successful',
-				data: createdExercise
-			}
+		res.status(200).json({
+			success: true,
+			code: 200,
+			message: 'Created exercise successfully',
+			data: createdExercise
 		})
 	} catch (err) {
 		res.status(500).json({
@@ -32,12 +31,11 @@ router.delete('/:id', async (req, res, next) => {
 	try {
 		const deletedExercise = await Exercise.findByIdAndRemove(req.params.id)
 
-		res.json({
-			status: {
-				code: 200,
-				message: 'Exercise deleted',
-				data: deletedExercise
-			}
+		res.status(200).json({
+			success: true,
+			code: 200,
+			message: 'Deleted exercise successfully',
+			data: deletedExercise
 		})
 	} catch (err) {
 		res.status(500).json({
@@ -55,12 +53,11 @@ router.put('/:id', async (req, res, next) => {
 	try {
 		const updatedExercise = await Exercise.findByIdAndUpdate(req.params.id, req.body, {new: true})
 
-		res.json({
-			status: {
-				code: 200,
-				message: 'Exercise updated',
-				data: updatedExercise
-			}
+		res.status(200).json({
+			success: true,
+			code: 200,
+			message: 'Updated exercise successfully',
+			data: updatedExercise
 		})
 	} catch (err) {
 		res.status(500).json({
@@ -75,3 +72,6 @@ router.put('/:id', async (req, res, next) => {
 
 
 module.exports = router
+
+
+

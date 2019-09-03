@@ -8,12 +8,11 @@ router.get('/', async (req, res, next) => {
 	try {
 		const allPlans = await WorkoutPlan.find({})
 
-		res.json({
-			status: {
-				code: 200,
-				message: 'All plans found successful',
-				data: allPlans
-			}
+		res.status(200).json({
+			success: true,
+			code: 200,
+			message: 'Found all plans successfully',
+			data: allPlans
 		})
 	} catch (err) {
 		res.status(500).json({
@@ -34,12 +33,11 @@ router.post('/', async (req, res, next) => {
 		createdPlan.userId = req.session.userId
 		console.log(createdPlan, '<---- createdPlan');
 
-		res.json({
-			status: {
-				code: 200,
-				message: 'Plan created successful',
-				data: createdPlan
-			}
+		res.status(200).json({
+			success: true,
+			code: 200,
+			message: 'Created plan successfully',
+			data: createdPlan
 		})
 	} catch (err) {
 		res.status(500).json({
@@ -58,12 +56,11 @@ router.get('/:id', async (req, res, next) => {
 	try {
 		const foundPlan = await WorkoutPlan.findById(req.params.id)
 
-		res.json({
-			status: {
-				code: 200,
-				message: 'Plan found successful',
-				data: foundPlan
-			}
+		res.status(200).json({
+			success: true,
+			code: 200,
+			message: 'Show plan successfully',
+			data: foundPlan
 		})
 	} catch (err) {
 		res.status(500).json({
@@ -81,12 +78,11 @@ router.put('/:id', async (req, res, next) => {
 	try {
 		const updatedPlan = await WorkoutPlan.findByIdAndUpdate(req.params.id, req.body, {new: true})
 
-		res.json({
-			status: {
-				code: 200,
-				message: 'Plan updated successful',
-				data: updatedPlan
-			}
+		res.status(200).json({
+			success: true,
+			code: 200,
+			message: 'Updated plan successfully',
+			data: allPlans
 		})
 	} catch (err) {
 		res.status(500).json({
@@ -104,12 +100,11 @@ router.delete('/:id', async (req, res, next) => {
 	try {
 		const deletedPlan = await WorkoutPlan.findByIdAndRemove(req.params.id)
 
-		res.json({
-			status: {
-				code: 200,
-				message: 'Plan deleted successful',
-				data: deletedPlan
-			}
+		res.status(200).json({
+			success: true,
+			code: 200,
+			message: 'Deleted plan successfully',
+			data: deletedPlan
 		})
 	} catch (err) {
 		res.status(500).json({

@@ -8,12 +8,11 @@ router.post('/', async (req, res, next) => {
 	try {
 		const createdComment = await Comment.create(req.body)
 
-		res.json({
-			status: {
-				code: 200,
-				message: 'Comment created',
-				data: createdComment
-			}
+		res.status(200).json({
+			success: true,
+			code: 200,
+			message: 'Created comment successfully',
+			data: createdComment
 		})
 	} catch (err) {
 		res.status(500).json({
@@ -31,12 +30,11 @@ router.delete('/:id', async (req, res, next) => {
 	try {
 		const deletedComment = await Comment.findByIdAndRemove(req.params.id)
 
-		res.json({
-			status: {
-				code: 200,
-				message: 'Comment deleted',
-				data: deletedComment
-			}
+		res.status(200).json({
+			success: true,
+			code: 200,
+			message: 'Deleted comment successfully',
+			data: deletedComment
 		})
 	} catch (err) {
 		res.status(500).json({
@@ -54,12 +52,11 @@ router.put('/:id', async (req, res, next) => {
 	try {
 		const updatedComment = await Comment.findByIdAndUpdate(req.params.id, req.body, {new: true})
 
-		res.json({
-			status: {
-				code: 200,
-				message: 'Comment updated',
-				data: updatedComment
-			}
+		res.status(200).json({
+			success: true,
+			code: 200,
+			message: 'Updated comment successfully',
+			data: updatedComment
 		})
 	} catch (err) {
 		res.status(500).json({
@@ -74,3 +71,6 @@ router.put('/:id', async (req, res, next) => {
 
 
 module.exports = router
+
+
+
