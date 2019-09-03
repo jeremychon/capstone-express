@@ -36,6 +36,9 @@ app.use('/plan', workoutPlanController)
 const exerciseController = require('./controllers/exerciseController')
 app.use('/exercise', exerciseController)
 
+const commentController = require('./controllers/commentController')
+app.use('/comment', commentController)
+
 
 app.listen(process.env.PORT || 9000, () => {
 	console.log('Listening on port 9000');

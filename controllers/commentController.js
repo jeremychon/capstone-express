@@ -1,19 +1,18 @@
 const express = require('express')
 const router = express.Router()
-const Exercise = require('../models/exercise')
+const Comment = require('../models/comment')
 
 
 // CREATE
 router.post('/', async (req, res, next) => {
 	try {
-		const createdExercise = await Exercise.create(req.body)
-		console.log(createdExercise, '<---- createdExercise');
+		const createdComment = await Comment.create(req.body)
 
 		res.json({
 			status: {
 				code: 200,
-				message: 'Exercise created successful',
-				data: createdExercise
+				message: 'Comment created',
+				data: createdComment
 			}
 		})
 	} catch (err) {
@@ -30,13 +29,13 @@ router.post('/', async (req, res, next) => {
 // DELETE
 router.delete('/:id', async (req, res, next) => {
 	try {
-		const deletedExercise = await Exercise.findByIdAndRemove(req.params.id)
+		const deletedComment = await Comment.findByIdAndRemove(req.params.id)
 
 		res.json({
 			status: {
 				code: 200,
-				message: 'Exercise deleted',
-				data: deletedExercise
+				message: 'Comment deleted',
+				data: deletedComment
 			}
 		})
 	} catch (err) {
@@ -53,13 +52,13 @@ router.delete('/:id', async (req, res, next) => {
 // UPDATE
 router.put('/:id', async (req, res, next) => {
 	try {
-		const updatedExercise = await Exercise.findByIdAndUpdate(req.params.id, req.body, {new: true})
+		const updatedComment = await Comment.findByIdAndUpdate(req.params.id, req.body, {new: true})
 
 		res.json({
 			status: {
 				code: 200,
-				message: 'Exercise updated',
-				data: updatedExercise
+				message: 'Comment updated',
+				data: updatedComment
 			}
 		})
 	} catch (err) {
