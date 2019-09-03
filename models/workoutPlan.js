@@ -1,23 +1,15 @@
 const mongoose = require('mongoose')
 
-const exerciseSchema = new mongoose.Schema({
-	type: String,
-	activity: String,
-	description: String
-})
-
-const commentSchema = new mongoose.Schema({
-	comment: String
-})
 
 const workoutPlanSchema = new mongoose.Schema({
 	userId: String,
-	goalType: String,
+	goalType: {
+		type: String,
+		enum: ['Weight Loss', 'Strength', 'Both']
+	},
 	current: Number,
 	goal: Number,
-	exercises: [exerciseSchema],
-	public: Boolean,
-	comments: [commentSchema]
+	public: Boolean
 })
 
 
