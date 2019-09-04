@@ -92,9 +92,9 @@ router.post('/register', async (req, res, next) => {
 
 		// checking if a user exists
 		if (existingUser) {
-			res.status(200).json({
+			res.status(401).json({
 				success: false,
-				code: 200,
+				code: 401,
 				message: 'User with that email already exists'
 			})
 		} else {
