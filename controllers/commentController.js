@@ -15,12 +15,7 @@ router.post('/', async (req, res, next) => {
 			data: createdComment
 		})
 	} catch (err) {
-		res.status(500).json({
-			success: false,
-			code: 500,
-			message: 'Internal Server Error',
-			error: err
-		})
+		next(err)
 	}
 })
 
@@ -37,12 +32,7 @@ router.delete('/:id', async (req, res, next) => {
 			data: deletedComment
 		})
 	} catch (err) {
-		res.status(500).json({
-			success: false,
-			code: 500,
-			message: 'Internal Server Error',
-			error: err
-		})
+		next(err)
 	}
 })
 
@@ -59,12 +49,7 @@ router.put('/:id', async (req, res, next) => {
 			data: updatedComment
 		})
 	} catch (err) {
-		res.status(500).json({
-			success: false,
-			code: 500,
-			message: 'Internal Server Error',
-			error: err
-		})
+		next(err)
 	}
 })
 

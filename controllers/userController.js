@@ -49,12 +49,7 @@ router.post('/login', async (req, res, next) => {
 			})
 		}
 	} catch (err) {
-		res.status(500).json({
-			success: false,
-			code: 500,
-			message: 'Internal Server Error',
-			error: err
-		})
+		next(err)
 	}
 })
 
@@ -63,12 +58,7 @@ router.get('/logout', async (req, res, next) => {
 	
 	req.session.destroy((err) => {
 		if (err) {
-			res.status(500).json({
-				success: false,
-				code: 500,
-				message: 'Internal Server Error',
-				error: err
-			})
+			next(err)
 		} else {
 			res.status(200).json({
 				success: true,
@@ -127,12 +117,7 @@ router.post('/register', async (req, res, next) => {
 
 		}
 	} catch (err) {
-		res.status(500).json({
-			success: false,
-			code: 500,
-			message: 'Internal Server Error',
-			error: err
-		})
+		next(err)
 	}
 })
 
@@ -149,12 +134,7 @@ router.get('/', async (req, res, next) => {
 			data: allUsers
 		})
 	} catch (err) {
-		res.status(500).json({
-			success: false,
-			code: 500,
-			message: 'Internal Server Error',
-			error: err
-		})
+		next(err)
 	}
 })
 
@@ -171,12 +151,7 @@ router.get('/:id', async (req, res, next) => {
 			data: foundUser
 		})
 	} catch (err) {
-		res.status(500).json({
-			success: false,
-			code: 500,
-			message: 'Internal Server Error',
-			error: err
-		})
+		next(err)
 	}
 })
 
@@ -193,12 +168,7 @@ router.delete('/:id', async (req, res, next) => {
 			data: deletedUser
 		})
 	} catch (err) {
-		res.status(500).json({
-			success: false,
-			code: 500,
-			message: 'Internal Server Error',
-			error: err
-		})
+		next(err)
 	}
 })
 

@@ -5,7 +5,7 @@ const workoutPlanSchema = new mongoose.Schema({
 	userId: String,
 	goalType: {
 		type: String,
-		enum: ['Weight Loss', 'Strength']
+		enum: ['Weight loss', 'Strength']
 	},
 	current: Number,
 	goal: Number,

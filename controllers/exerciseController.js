@@ -16,12 +16,7 @@ router.post('/', async (req, res, next) => {
 			data: createdExercise
 		})
 	} catch (err) {
-		res.status(500).json({
-			success: false,
-			code: 500,
-			message: 'Internal Server Error',
-			error: err
-		})
+		next(err)
 	}
 })
 
@@ -38,12 +33,7 @@ router.delete('/:id', async (req, res, next) => {
 			data: deletedExercise
 		})
 	} catch (err) {
-		res.status(500).json({
-			success: false,
-			code: 500,
-			message: 'Internal Server Error',
-			error: err
-		})
+		next(err)
 	}
 })
 
@@ -60,12 +50,7 @@ router.put('/:id', async (req, res, next) => {
 			data: updatedExercise
 		})
 	} catch (err) {
-		res.status(500).json({
-			success: false,
-			code: 500,
-			message: 'Internal Server Error',
-			error: err
-		})
+		next(err)
 	}
 })
 

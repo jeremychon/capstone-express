@@ -15,12 +15,7 @@ router.get('/', async (req, res, next) => {
 			data: allPlans
 		})
 	} catch (err) {
-		res.status(500).json({
-			success: false,
-			code: 500,
-			message: 'Internal Server Error',
-			error: err
-		})
+		next(err)
 	}
 })
 
@@ -28,10 +23,11 @@ router.get('/', async (req, res, next) => {
 // CREATE
 router.post('/', async (req, res, next) => {
 	try {
-		console.log(req.session, '<--- session');
+		console.log(req.session, '<--- session in create plan');
+		console.log(req.body, '<---- req.body in create plan');
 		const createdPlan = await WorkoutPlan.create(req.body)
-		createdPlan.userId = req.session.userId
 		console.log(createdPlan, '<---- createdPlan');
+		createdPlan.userId = req.session.userId
 
 		res.status(200).json({
 			success: true,
@@ -39,20 +35,15 @@ router.post('/', async (req, res, next) => {
 			message: 'Created plan successfully',
 			data: createdPlan
 		})
+
 	} catch (err) {
-		res.status(500).json({
-			success: false,
-			code: 500,
-			message: 'Internal Server Error',
-			error: err
-		})
+		next(err)
 	}
 })
 
 
 // SHOW
 router.get('/:id', async (req, res, next) => {
-	console.log(req.params, '<--- req.params');
 	try {
 		const foundPlan = await WorkoutPlan.findById(req.params.id)
 
@@ -85,12 +76,7 @@ router.put('/:id', async (req, res, next) => {
 			data: allPlans
 		})
 	} catch (err) {
-		res.status(500).json({
-			success: false,
-			code: 500,
-			message: 'Internal Server Error',
-			error: err
-		})
+		next(err)
 	}
 })
 
@@ -107,12 +93,7 @@ router.delete('/:id', async (req, res, next) => {
 			data: deletedPlan
 		})
 	} catch (err) {
-		res.status(500).json({
-			success: false,
-			code: 500,
-			message: 'Internal Server Error',
-			error: err
-		})
+		next(err)
 	}
 })
 
