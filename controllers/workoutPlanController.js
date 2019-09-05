@@ -6,7 +6,8 @@ const WorkoutPlan = require('../models/workoutPlan')
 // GET ALL PLANS
 router.get('/', async (req, res, next) => {
 	try {
-		const allPlans = await WorkoutPlan.find({})
+		const allPlans = await WorkoutPlan.find({}).populate('user')
+		console.log(allPlans, '<--- all plans');
 
 		res.status(200).json({
 			success: true,
@@ -25,9 +26,14 @@ router.post('/', async (req, res, next) => {
 	try {
 		console.log(req.session, '<--- session in create plan');
 		console.log(req.body, '<---- req.body in create plan');
-		const createdPlan = await WorkoutPlan.create(req.body)
+		const createdPlan = await WorkoutPlan.create({
+			goalType: req.body.goalType,
+			current: req.body.current,
+			goal: req.body.goal,
+			public: req.body.public,
+			user: req.session.userId
+		})
 		console.log(createdPlan, '<---- createdPlan');
-		createdPlan.userId = req.session.userId
 
 		res.status(200).json({
 			success: true,
@@ -73,7 +79,7 @@ router.put('/:id', async (req, res, next) => {
 			success: true,
 			code: 200,
 			message: 'Updated plan successfully',
-			data: allPlans
+			data: updatedPlan
 		})
 	} catch (err) {
 		next(err)

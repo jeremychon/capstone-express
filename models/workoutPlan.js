@@ -2,7 +2,7 @@ const mongoose = require('mongoose')
 
 
 const workoutPlanSchema = new mongoose.Schema({
-	userId: String,
+	user: { type: mongoose.Schema.Types.ObjectId, ref: 'User' },
 	goalType: {
 		type: String,
 		enum: ['Weight loss', 'Strength']
