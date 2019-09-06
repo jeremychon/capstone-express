@@ -48,7 +48,7 @@ router.post('/', async (req, res, next) => {
 // SHOW
 router.get('/:id', async (req, res, next) => {
 	try {
-		const foundPlan = await WorkoutPlan.findById(req.params.id).populate('exercises')
+		const foundPlan = await WorkoutPlan.findById(req.params.id)
 
 		res.status(200).json({
 			success: true,
@@ -90,7 +90,6 @@ router.delete('/:id', async (req, res, next) => {
 		const deletedPlan = await WorkoutPlan.findByIdAndRemove(req.params.id)
 
 		const deletedExercises = await Exercise.deleteMany({planId: req.params.id})
-		console.log(deletedExercises, '<--- deletedExercises');
 
 		res.status(200).json({
 			success: true,

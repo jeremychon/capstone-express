@@ -23,7 +23,6 @@ router.get('/', async (req, res, next) => {
 router.post('/', async (req, res, next) => {
 	try {
 		const createdExercise = await Exercise.create(req.body)
-		console.log(createdExercise, '<---- createdExercise');
 
 		res.status(200).json({
 			success: true,

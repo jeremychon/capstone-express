@@ -39,6 +39,9 @@ app.use('/exercise', exerciseController)
 const commentController = require('./controllers/commentController')
 app.use('/comment', commentController)
 
+const setController = require('./controllers/setController')
+app.use('/set', setController)
+
 
 app.listen(process.env.PORT || 9000, () => {
 	console.log('Listening on port 9000');

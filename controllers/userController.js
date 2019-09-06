@@ -1,6 +1,7 @@
 const express = require('express')
 const router = express.Router()
 const User = require('../models/user')
+const WorkoutPlan = require('../models/workoutPlan')
 const bcrypt = require('bcryptjs')
 
 
@@ -13,9 +14,6 @@ router.post('/login', async (req, res, next) => {
 		const joinEmail = splitEmail[0] + '@' + domain
 
 		const foundUser = await User.findOne({email: joinEmail})
-		console.log('======');
-		console.log(foundUser, '<--- logged user (foundUser)');
-		console.log('======');
 
 		// if there's a user in the db
 		if (foundUser) {
@@ -98,9 +96,6 @@ router.post('/register', async (req, res, next) => {
 				email: joinEmail,
 				password: hashedPassword
 			});
-			console.log('======');
-			console.log(registerUser, '<--- registered user (registerUser)');
-			console.log('======');
 
 			// set info on the session
 			req.session.userId = registerUser._id;
@@ -143,12 +138,14 @@ router.get('/', async (req, res, next) => {
 router.get('/:id', async (req, res, next) => {
 	try {
 		const foundUser = await User.findById(req.params.id)
+		const userPlans = await WorkoutPlan.find({user: req.params.id})
 
 		res.status(200).json({
 			success: true,
 			code: 200,
 			message: 'Found specific user successfully',
-			data: foundUser
+			userData: foundUser,
+			plans: userPlans
 		})
 	} catch (err) {
 		next(err)
