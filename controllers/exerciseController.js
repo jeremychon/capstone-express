@@ -3,6 +3,22 @@ const router = express.Router()
 const Exercise = require('../models/exercise')
 
 
+// GET ALL
+router.get('/', async (req, res, next) => {
+	try {
+		const allExercises = await Exercise.find({})
+
+		res.status(200).json({
+			success: true,
+			code: 200,
+			message: 'Found all exercises',
+			data: allExercises
+		})
+	} catch (err) {
+		next(err)
+	}
+})
+
 // CREATE
 router.post('/', async (req, res, next) => {
 	try {

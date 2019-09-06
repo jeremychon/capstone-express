@@ -1,13 +1,13 @@
 const express = require('express')
 const router = express.Router()
 const WorkoutPlan = require('../models/workoutPlan')
+const Exercise = require('../models/exercise')
 
 
 // GET ALL PLANS
 router.get('/', async (req, res, next) => {
 	try {
 		const allPlans = await WorkoutPlan.find({}).populate('user')
-		console.log(allPlans, '<--- all plans');
 
 		res.status(200).json({
 			success: true,
@@ -24,8 +24,6 @@ router.get('/', async (req, res, next) => {
 // CREATE
 router.post('/', async (req, res, next) => {
 	try {
-		console.log(req.session, '<--- session in create plan');
-		console.log(req.body, '<---- req.body in create plan');
 		const createdPlan = await WorkoutPlan.create({
 			goalType: req.body.goalType,
 			current: req.body.current,
@@ -33,7 +31,6 @@ router.post('/', async (req, res, next) => {
 			public: req.body.public,
 			user: req.session.userId
 		})
-		console.log(createdPlan, '<---- createdPlan');
 
 		res.status(200).json({
 			success: true,
@@ -51,7 +48,7 @@ router.post('/', async (req, res, next) => {
 // SHOW
 router.get('/:id', async (req, res, next) => {
 	try {
-		const foundPlan = await WorkoutPlan.findById(req.params.id)
+		const foundPlan = await WorkoutPlan.findById(req.params.id).populate('exercises')
 
 		res.status(200).json({
 			success: true,
@@ -91,6 +88,9 @@ router.put('/:id', async (req, res, next) => {
 router.delete('/:id', async (req, res, next) => {
 	try {
 		const deletedPlan = await WorkoutPlan.findByIdAndRemove(req.params.id)
+
+		const deletedExercises = await Exercise.deleteMany({planId: req.params.id})
+		console.log(deletedExercises, '<--- deletedExercises');
 
 		res.status(200).json({
 			success: true,
