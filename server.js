@@ -5,6 +5,8 @@ const app	  	 = express()
 const bodyParser = require('body-parser')
 const cors 		 = require('cors')
 const session 	 = require('express-session')
+const fs 		 = require('fs')
+const multer 	 = require('multer')
 
 require('./db/db')
 

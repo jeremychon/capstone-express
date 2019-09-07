@@ -9,6 +9,7 @@ const workoutPlanSchema = new mongoose.Schema({
 	},
 	current: Number,
 	goal: Number,
+	purpose: String,
 	public: Boolean
 })
 

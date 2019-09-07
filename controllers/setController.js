@@ -35,5 +35,24 @@ router.get('/', async (req, res, next) => {
 	}
 })
 
+// UPDATE SETS
+
+
+
+// DELETE SETS
+router.delete('/:id', async (req, res, next) => {
+	try {
+		const deletedSet = await Sets.findByIdAndRemove(req.params.id)
+
+		res.status(200).json({
+			success: true,
+			code: 200,
+			message: 'Deleted set successfully'
+		})
+
+	} catch (err) {
+		next(err)
+	}
+})
 
 module.exports = router
