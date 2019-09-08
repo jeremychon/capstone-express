@@ -2,6 +2,7 @@ const express = require('express')
 const router = express.Router()
 const WorkoutPlan = require('../models/workoutPlan')
 const Exercise = require('../models/exercise')
+const Sets = require('../models/set')
 
 
 // GET ALL PLANS
@@ -28,6 +29,7 @@ router.post('/', async (req, res, next) => {
 			goalType: req.body.goalType,
 			current: req.body.current,
 			goal: req.body.goal,
+			purpose: req.body.purpose,
 			public: req.body.public,
 			user: req.session.userId
 		})
@@ -88,7 +90,6 @@ router.put('/:id', async (req, res, next) => {
 router.delete('/:id', async (req, res, next) => {
 	try {
 		const deletedPlan = await WorkoutPlan.findByIdAndRemove(req.params.id)
-
 		const deletedExercises = await Exercise.deleteMany({planId: req.params.id})
 
 		res.status(200).json({

@@ -8,6 +8,10 @@ const exerciseSchema = new mongoose.Schema({
 		enum: ['Strength & Conditioning', 'Cardio']
 	},
 	activity: String,
+	sets: [{
+		reps: Number,
+		notes: String
+	}],
 	description: String
 })
 
