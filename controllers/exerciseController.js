@@ -41,6 +41,7 @@ router.post('/', async (req, res, next) => {
 router.delete('/:id', async (req, res, next) => {
 	try {
 		const deletedExercise = await Exercise.findByIdAndRemove(req.params.id)
+		const deletedSets = await Sets.deleteMany({exerciseId: req.params.id})
 
 		res.status(200).json({
 			success: true,

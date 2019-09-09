@@ -36,7 +36,20 @@ router.get('/', async (req, res, next) => {
 })
 
 // UPDATE SETS
+router.put('/:id', async (req, res, next) => {
+	try {
+		const updatedSet = await Sets.findByIdAndUpdate(req.params.id, req.body, {new: true})
 
+		res.status(200).json({
+			success: true,
+			code: 200,
+			message: 'Updated set successfully',
+			data: updatedSet
+		})
+	} catch (err) {
+		next(err)
+	}
+})
 
 
 // DELETE SETS
@@ -47,7 +60,8 @@ router.delete('/:id', async (req, res, next) => {
 		res.status(200).json({
 			success: true,
 			code: 200,
-			message: 'Deleted set successfully'
+			message: 'Deleted set successfully',
+			data: deletedSet
 		})
 
 	} catch (err) {

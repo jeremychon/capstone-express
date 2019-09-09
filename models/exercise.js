@@ -1,6 +1,5 @@
 const mongoose = require('mongoose')
 
-
 const exerciseSchema = new mongoose.Schema({
 	planId: String,
 	type: {
@@ -8,10 +7,6 @@ const exerciseSchema = new mongoose.Schema({
 		enum: ['Strength & Conditioning', 'Cardio']
 	},
 	activity: String,
-	sets: [{
-		reps: Number,
-		notes: String
-	}],
 	description: String
 })
 
