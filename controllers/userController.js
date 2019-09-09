@@ -1,11 +1,13 @@
-const express = require('express')
-const router = express.Router()
-const User = require('../models/user')
+const express 	  = require('express')
+const router 	  = express.Router()
+const User 		  = require('../models/user')
 const WorkoutPlan = require('../models/workoutPlan')
-const bcrypt = require('bcryptjs')
-const multer = require('multer')
-const upload = multer({ dest: 'progress/'})
-
+const bcrypt 	  = require('bcryptjs')
+const multer 	  = require('multer')
+const fs 		  = require('fs')
+const upload 	  = multer({ dest: 'uploads/'})
+// const storage = multer.memoryStorage()
+// const upload = multer({ storage: storage })
 
 // LOGIN
 router.post('/login', async (req, res, next) => {
@@ -70,9 +72,18 @@ router.post('/logout', async (req, res, next) => {
 })
 
 // REGISTER
-router.post('/register', async (req, res, next) => {
+router.post('/register', upload.single('profPic'), async (req, res, next) => {
 
 	try {
+		console.log(req.file, '<----- req.file');
+
+		const filePath = './uploads/' + req.file.filename
+		const img = {
+			data: fs.readFileSync(filePath),
+			contentType: req.file.mimetype
+		}
+		console.log(img, '<---- img');
+
 		// making all email domains lowercase
 		const splitEmail = req.body.email.split('@')
 		const domain = splitEmail[1].toLowerCase()
@@ -96,8 +107,11 @@ router.post('/register', async (req, res, next) => {
 				firstName: req.body.firstName,
 				lastName: req.body.lastName,
 				email: joinEmail,
-				password: hashedPassword
+				password: hashedPassword,
+				image: img
 			});
+
+			fs.unlinkSync(filePath)
 
 			// set info on the session
 			req.session.userId = registerUser._id;
@@ -111,8 +125,8 @@ router.post('/register', async (req, res, next) => {
 				message: 'User register successful',
 				data: registerUser
 			})
-
 		}
+
 	} catch (err) {
 		next(err)
 	}
