@@ -75,14 +75,11 @@ router.post('/logout', async (req, res, next) => {
 router.post('/register', upload.single('profPic'), async (req, res, next) => {
 
 	try {
-		console.log(req.file, '<----- req.file');
-
 		const filePath = './uploads/' + req.file.filename
 		const img = {
 			data: fs.readFileSync(filePath),
 			contentType: req.file.mimetype
 		}
-		console.log(img, '<---- img');
 
 		// making all email domains lowercase
 		const splitEmail = req.body.email.split('@')
