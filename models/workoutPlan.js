@@ -10,6 +10,8 @@ const workoutPlanSchema = new mongoose.Schema({
 	current: Number,
 	goal: Number,
 	purpose: String,
+	progressWeight: Number,
+	progressPercent: Number,
 	public: Boolean
 })
 
