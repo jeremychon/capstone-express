@@ -7,7 +7,7 @@ const cors 		 = require('cors')
 const session 	 = require('express-session')
 const fs 		 = require('fs')
 const multer 	 = require('multer')
-
+const PORT 		 = process.env.PORT || 9000
 require('./db/db')
 
 app.use(session({
@@ -45,6 +45,7 @@ const setController = require('./controllers/setController')
 app.use('/set', setController)
 
 console.log(process.env);
-app.listen(process.env.PORT || 9000, () => {
-	console.log('Listening on port 9000');
+
+app.listen(PORT, () => {
+	console.log('Listening on ' + PORT);
 })
