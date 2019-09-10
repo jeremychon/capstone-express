@@ -7,7 +7,7 @@ const Comment = require('../models/comment')
 // FIND ALL COMMENTS FOR PLAN
 router.get('/:planId', async (req, res, next) => {
 	try {
-		const foundComments = await Comment.find({planId: req.params.id}).populate('user')
+		const foundComments = await Comment.find({planId: req.params.planId}).populate('user')
 		console.log(foundComments, '<---- foundComments in get route');
 
 		res.status(200).json({
@@ -30,6 +30,7 @@ router.post('/:planId', async (req, res, next) => {
 			planId: req.params.planId,
 			comment: req.body.comment
 		})
+		console.log(createdComment, '<-- createdComment');
 
 		res.status(200).json({
 			success: true,
