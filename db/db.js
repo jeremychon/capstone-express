@@ -1,14 +1,14 @@
 const mongoose = require('mongoose')
 
-// let connectionString
+let connectionString
 
-// if (process.env.NODE_ENV == 'production') {
-// 	connectionString = process.env.DATABASE_URL
-// } else {
-// 	connectionString = 'mongodb://localhost/weightmate'
-// }
+if (process.env.NODE_ENV == 'production') {
+	connectionString = process.env.DATABASE_URL
+} else {
+	connectionString = 'mongodb://localhost/weightmate'
+}
 
-mongoose.connect('mongodb://localhost/weightmate', {
+mongoose.connect(connectionString, {
 	useNewUrlParser: true,
 	useCreateIndex: true,
 	useFindAndModify: false
