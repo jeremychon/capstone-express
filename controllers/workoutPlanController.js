@@ -3,6 +3,7 @@ const router = express.Router()
 const WorkoutPlan = require('../models/workoutPlan')
 const Exercise = require('../models/exercise')
 const Sets = require('../models/set')
+const Comment = require('../models/comment')
 
 
 // GET ALL PLANS
@@ -51,12 +52,14 @@ router.post('/', async (req, res, next) => {
 router.get('/:id', async (req, res, next) => {
 	try {
 		const foundPlan = await WorkoutPlan.findById(req.params.id)
+		const foundComments = await Comment.find({planId: req.params.id})
 
 		res.status(200).json({
 			success: true,
 			code: 200,
 			message: 'Show plan successfully',
-			data: foundPlan
+			plan: foundPlan,
+			comments: foundComments
 		})
 	} catch (err) {
 		res.status(500).json({
