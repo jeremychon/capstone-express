@@ -2,11 +2,11 @@ const express 	  = require('express')
 const router 	  = express.Router()
 const User 		  = require('../models/user')
 const WorkoutPlan = require('../models/workoutPlan')
-const ProfilePic  = require('../models/profilePic')
+// const ProfilePic  = require('../models/profilePic')
 const bcrypt 	  = require('bcryptjs')
-const multer 	  = require('multer')
-const fs 		  = require('fs')
-const upload 	  = multer({ dest: 'uploads/'})
+// const multer 	  = require('multer')
+// const fs 		  = require('fs')
+// const upload 	  = multer({ dest: 'uploads/'})
 
 // LOGIN
 router.post('/login', async (req, res, next) => {
@@ -71,9 +71,10 @@ router.post('/logout', async (req, res, next) => {
 })
 
 // REGISTER
-router.post('/register', upload.single('profPic'), async (req, res, next) => {
+router.post('/register', async (req, res, next) => {
 
 	try {
+		console.log(req.body, '<--- req.body');
 
 		// making all email domains lowercase
 		const splitEmail = req.body.email.split('@')
@@ -90,17 +91,6 @@ router.post('/register', upload.single('profPic'), async (req, res, next) => {
 				message: 'User with that email already exists'
 			})
 		} else {
-			const filePath = './uploads/' + req.file.filename
-			const img = {
-				data: fs.readFileSync(filePath),
-				contentType: req.file.mimetype
-			}
-			profPic.img.data = fs.readFileSync(filePath)
-			profPic.img.contentType = req.file.mimetype
-
-			await profPic.save()
-
-			fs.unlinkSync(filePath)
 			// hash password
 			const hashedPassword = bcrypt.hashSync(req.body.password, bcrypt.genSaltSync(10))
 			
@@ -109,11 +99,8 @@ router.post('/register', upload.single('profPic'), async (req, res, next) => {
 				firstName: req.body.firstName,
 				lastName: req.body.lastName,
 				email: joinEmail,
-				password: hashedPassword,
-				profPic: profPic
+				password: hashedPassword
 			});
-
-			// fs.unlinkSync(filePath)
 
 			// set info on the session
 			req.session.userId = registerUser._id;
