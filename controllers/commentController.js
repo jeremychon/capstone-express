@@ -3,6 +3,25 @@ const router = express.Router()
 const Comment = require('../models/comment')
 
 
+
+// FIND ALL COMMENTS FOR PLAN
+router.get('/:planId', async (req, res, next) => {
+	try {
+		const foundComments = await Comment.find({planId: req.params.id}).populate('user')
+		console.log(foundComments, '<---- foundComments in get route');
+
+		res.status(200).json({
+			success: true,
+			code: 200,
+			message: 'Found comments successfully',
+			data: foundComments
+		})
+	} catch (err) {
+		next(err)
+	}
+})
+
+
 // CREATE
 router.post('/:planId', async (req, res, next) => {
 	try {

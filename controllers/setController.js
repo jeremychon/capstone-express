@@ -22,7 +22,6 @@ router.post('/', async (req, res, next) => {
 router.get('/', async (req, res, next) => {
 	try {
 		const allSets = await Sets.find({})
-		console.log(allSets, '<---- all sets');
 
 		res.status(200).json({
 			success: true,

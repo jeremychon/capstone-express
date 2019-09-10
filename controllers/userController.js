@@ -7,8 +7,6 @@ const bcrypt 	  = require('bcryptjs')
 const multer 	  = require('multer')
 const fs 		  = require('fs')
 const upload 	  = multer({ dest: 'uploads/'})
-// const storage = multer.memoryStorage()
-// const upload = multer({ storage: storage })
 
 // LOGIN
 router.post('/login', async (req, res, next) => {
@@ -76,7 +74,7 @@ router.post('/logout', async (req, res, next) => {
 router.post('/register', upload.single('profPic'), async (req, res, next) => {
 
 	try {
-		console.log(req.file, '<---- req.file');
+
 		// making all email domains lowercase
 		const splitEmail = req.body.email.split('@')
 		const domain = splitEmail[1].toLowerCase()
@@ -93,11 +91,10 @@ router.post('/register', upload.single('profPic'), async (req, res, next) => {
 			})
 		} else {
 			const filePath = './uploads/' + req.file.filename
-			const profPic = new ProfilePic;
-			// const img = {
-			// 	data: fs.readFileSync(filePath),
-			// 	contentType: req.file.mimetype
-			// }
+			const img = {
+				data: fs.readFileSync(filePath),
+				contentType: req.file.mimetype
+			}
 			profPic.img.data = fs.readFileSync(filePath)
 			profPic.img.contentType = req.file.mimetype
 

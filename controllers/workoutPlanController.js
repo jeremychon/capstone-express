@@ -52,7 +52,7 @@ router.post('/', async (req, res, next) => {
 router.get('/:id', async (req, res, next) => {
 	try {
 		const foundPlan = await WorkoutPlan.findById(req.params.id)
-		const foundComments = await Comment.find({planId: req.params.id})
+		const foundComments = await Comment.find({planId: req.params.id}).populate('user')
 
 		res.status(200).json({
 			success: true,
