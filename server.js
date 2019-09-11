@@ -21,7 +21,7 @@ app.use(bodyParser.json())
 
 // Cross Origin Resource Sharing
 const corsOptions = {
-	origin: process.env.CORS_ORIGIN,
+	origin: 'http://localhost:3000',
 	credentials: true,
 	optionsSuccessStatus: 200
 }
