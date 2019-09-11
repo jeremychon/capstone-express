@@ -44,7 +44,6 @@ app.use('/comment', commentController)
 const setController = require('./controllers/setController')
 app.use('/set', setController)
 
-console.log(process.env);
 
 app.listen(PORT, () => {
 	console.log('Listening on ' + PORT);
